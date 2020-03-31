@@ -1,15 +1,26 @@
-import styled from 'styled-components';
-//import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import styled from "styled-components";
 
-const StyledButton = styled(Button)`
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-  border-radius: 3px;
-  border: 0;
-  color: white;
-  height: 48px;
-  padding: 0 30px;
-  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
+const StyledButton = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => (props.primary ? "#343350" : "white")};
+  color: ${props => (props.primary ? "white" : "#343350")};
+  font-size: 1em;
+  font-weight: 700;
+  margin: 1em;
+  padding: 0.5em 1.5em;
+  border: 2px solid #343350;
+  border-radius: 15px;
+  cursor: pointer;
+  text-transform: none;
+  outline: none;
+  &:disabled {
+    cursor: auto;
+    opacity: 0.3;
+    box-shadow: #343350 0px 0px 0px 0px;
+  }
+  &:hover:enabled {
+    box-shadow: #343350 0px 0px 0px 2px;
+  }
 `;
 
 export default StyledButton;

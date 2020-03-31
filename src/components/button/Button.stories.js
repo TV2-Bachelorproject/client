@@ -6,16 +6,17 @@ import Button from '../button/Button';
 
 export default {
   title: 'Button',
+  
 };
 
 export const Primary = () => (
-  <Button onClick={action('Button clicked')} variant="contained">
+  <Button primary  onClick={action('Button clicked')}>
     Click me!
   </Button>
 );
 
 export const Secondary = () => (
-<Button color="secondary" onClick={action('Secondary button clicked')} variant="contained">
+<Button color="secondary" onClick={action('Secondary button clicked')}>
 Secondary
 </Button>
 );
