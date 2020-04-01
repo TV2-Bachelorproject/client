@@ -3,10 +3,10 @@ import React from "react";
 
 const StyledHeading = styled.h1`
   font-family: montserrat;
-  color: ${props => props.inputColor || "#343350"};
+  color: #343350;
 `;
 
-const Heading = ({ level, inputColor, ...rest }) => {
+const Heading = ({ level, ...rest }) => {
   return <StyledHeading as={`h${level}`} {...rest} />;
 };
 

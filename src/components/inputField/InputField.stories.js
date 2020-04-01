@@ -3,7 +3,8 @@ import InputField from "../inputField/InputField";
 import { action } from "@storybook/addon-actions";
 
 export default {
-  title: "Input"
+  title: "Input",
+  decorators: [story => <div style={{ padding: "3rem" }}>{story()}</div>]
 };
 
 export const TextInput = () => (

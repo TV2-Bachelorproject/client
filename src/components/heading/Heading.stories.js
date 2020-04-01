@@ -2,7 +2,8 @@ import React from "react";
 import Heading from "../heading/Heading";
 
 export default {
-  title: "Heading"
+  title: "Heading",
+  decorators: [story => <div style={{ padding: "3rem" }}>{story()}</div>]
 };
 
 const H = ({ level }) => <Heading level={level}>{`Heading ${level}`}</Heading>;
