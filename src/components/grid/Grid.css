@@ -1,0 +1,22 @@
+.tc_grid {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 6fr;
+  grid-auto-rows: minmax(0px, auto);
+}
+.tc_grid--gutter {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.tc_grid--stretch {
+  grid-template-rows: auto;
+}
+.tc_grid--center {
+  justify-items: center;
+}
+[data-grid-bs="col"] {
+  grid-template-columns: auto;
+}
+[data-grid-bs="row"] {
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
