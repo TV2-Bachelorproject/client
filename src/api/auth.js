@@ -30,7 +30,7 @@ export default {
   },
 
   async refresh() {
-    const res = await fetch("http://localhost:3000/auth/login", {
+    const res = await fetch("http://localhost:3000/auth/refresh", {
         method: "POST",
         headers: {
           'token': localStorage.getItem('token'),
