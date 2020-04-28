@@ -9,9 +9,6 @@ const options = {
   referrer: 'no-referrer',
 };
 
-let refreshInterval
-
-
 export default {
   async login (email, password) {
     const res = await fetch("http://localhost:3000/auth/login", {
@@ -20,7 +17,7 @@ export default {
         ...options
     });
 
-    if (res.status != 200) {
+    if (res.status !== 200) {
       throw new Error('Invalid credentials')
     }
 
@@ -38,7 +35,7 @@ export default {
         ...options
     });
 
-    if (res.status != 200) {
+    if (res.status !== 200) {
       throw new Error('Invalid token')
     }
 
