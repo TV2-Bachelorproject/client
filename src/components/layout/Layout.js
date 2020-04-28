@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom';
 import { Grid } from "../grid/Grid";
 import styled from "styled-components";
 import { PageSidebar } from "../Structure/pageSidebar/pageSidebar";
@@ -70,6 +71,11 @@ export default class Layout extends Component {
   ];
 
   render() {
+    if (!localStorage.getItem('token')) {
+      return <Redirect to='/login' />
+    }
+
+
     return (
       <Grid tag="div">
         <PageSidebar>
