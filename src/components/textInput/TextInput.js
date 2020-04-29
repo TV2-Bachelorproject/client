@@ -24,7 +24,6 @@ const TextInput = (props) => {
       onChange={props.onChange}
       style={props.style}
       onBlur={(e) => (e.target.placeholder = props.text || "Insert text here!")}
-      onChange={props.onChange}
       name={props.name}
     />
   );
