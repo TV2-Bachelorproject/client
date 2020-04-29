@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
+import auth from "../../api/auth";
 import Heading from "../../components/heading/Heading";
 import TextInput from "../../components/textInput/TextInput";
 import Button from "../../components/button/Button";
@@ -28,14 +30,33 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: "",
+      token: null,
       error: null,
     };
   }
 
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  async handleLogin() {
+    try {
+      const token = await auth.login(this.state.email, this.state.password)
+      this.setState({ token })
+    } catch(err) {
+      this.setState({ error: err.toString() })
+    }
+  }
+
   render() {
-    console.log(this.state.password);
+    if (auth.check()) {
+      return <Redirect to='/' />
+    }
+
     return (
       <Grid tag="div">
         <Nested>
@@ -46,10 +67,10 @@ export default class Login extends Component {
           <Heading style={{ marginTop: 35, marginBlockEnd: 0 }} level={1}>
             Velkommen!
           </Heading>
-          <p>Har du endnu ikke oprettet en konto?</p>
-          <TextInput text="Email"></TextInput>
-          <TextInput text="Kodeord" type="password"></TextInput>
-          <Button primary>Login</Button>
+          {this.state.error && <b style={{ color: 'red' }}>{this.state.error}</b>}
+          <TextInput name="email" text="Email" onChange={this.handleChange.bind(this)} />
+          <TextInput name="password" text="Kodeord" type="password" onChange={this.handleChange.bind(this)} />
+          <Button onClick={this.handleLogin.bind(this)} primary>Login</Button>
         </Nested>
       </Grid>
     );
