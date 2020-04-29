@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Layout from "../../components/Layout/Layout";
 import Heading from "../../components/heading/Heading";
 import Datatable from "../../components/datatable/Datatable";
+import TextInput from "../../components/textInput/TextInput";
 import program from "../../api/program";
 import moment from "moment";
 
@@ -16,6 +17,7 @@ export default class Programs extends Component {
     super(props);
     this.state = {
       programs: [],
+      search: "",
       error: null,
     };
   }
@@ -34,6 +36,10 @@ export default class Programs extends Component {
       });
     }
   };
+
+  search = e => {
+    this.setState({ search: e.target.value })
+  }
 
   renderPrograms(program) {
     if (!program.title) {
@@ -63,6 +69,7 @@ export default class Programs extends Component {
         <Heading style={{ alignSelf: "end" }} level={1}>
           Programs
         </Heading>
+        <TextInput style={{maxHeight: '30px', border: 'solid 1px #000', alignSelf: "end" }} text="Søg" onChange={this.search} />
         <Grid>
           <Datatable>
             <table>
@@ -74,7 +81,7 @@ export default class Programs extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.programs.map(this.renderPrograms.bind(this))}
+                {this.state.programs.filter(p => p.title.toLowerCase().includes(this.state.search.toLowerCase())).map(this.renderPrograms.bind(this))}
               </tbody>
               <tfoot>
                 <tr>
