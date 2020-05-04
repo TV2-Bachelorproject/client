@@ -2,24 +2,29 @@ import styled from "styled-components";
 import React from "react";
 
 const StyledTextInput = styled.input`
-  padding-left: 1.3em;
+  padding: 0.85em 1.3em;
+  margin: 0.5em;
   font-size: 0.9em;
   outline: none;
   color: ${(props) => props.inputColor || "#97959D"};
   background: #f5f6f8;
   border: none;
-  border-radius: 10px;
-  min-height: 45px;
+  border-radius: 15px;
+  &:focus {
+    box-shadow: #343350 0px 0px 0px 2px;
+  }
 `;
 
-const TextInput = ({ text, ...rest }) => {
+const TextInput = (props) => {
   return (
     <StyledTextInput
-      type="text"
-      placeholder={text || "Insert text here!"}
+      type={props.type}
+      placeholder={props.text || "Insert text here!"}
       onFocus={(e) => (e.target.placeholder = "")}
-      onBlur={(e) => (e.target.placeholder = text || "Insert text here!")}
-      {...rest}
+      onChange={props.onChange}
+      style={props.style}
+      onBlur={(e) => (e.target.placeholder = props.text || "Insert text here!")}
+      name={props.name}
     />
   );
 };
