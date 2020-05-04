@@ -17,9 +17,9 @@ const BodyGrid = styled.div`
   border-radius: 25px;
   padding: 2.5em;
   display: grid;
-  grid-template-rows: repeat(auto-fill, 250px);
+  grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: minmax(0, auto);
+
   grid-column-gap: 1em;
 `;
 
@@ -100,6 +100,11 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   padding: 8px;
   line-height: 15px;
   cursor: pointer;
+  &:hover {
+    background: red;
+    opacity: 0.7;
+    color: black;
+  }
 `;
 
 export default class Programs extends Component {
@@ -180,12 +185,6 @@ export default class Programs extends Component {
     }
   };
 
-  onCreatePerson = () => {
-    let person = {};
-
-    this.setState({ credits: [...this.state.credits, person] });
-  };
-
   onSave = async () => {
     let credit = {
       programID: parseInt(this.props.match.params.id),
@@ -195,6 +194,7 @@ export default class Programs extends Component {
 
     try {
       await credits.createCredit(credit);
+      this.loadCredits();
     } catch (e) {
       this.setState({
         error: "Couldn't save!",
@@ -221,6 +221,15 @@ export default class Programs extends Component {
           credit.persons = credit.persons.filter(
             (person) => person.id !== personID
           );
+
+          try {
+            credits.deleteCredit({ personID: personID, creditID: creditID });
+          } catch (e) {
+            this.setState({
+              error: "credit could not delete",
+            });
+          }
+
           return credit;
         }
       }),
@@ -228,6 +237,10 @@ export default class Programs extends Component {
   };
 
   renderTables(credit, index) {
+    if (credit.persons.length === 0) {
+      return;
+    }
+
     return (
       <StyledDatatable key={index}>
         <Heading level={2}>{credit.creditGroup.name}</Heading>
@@ -272,6 +285,34 @@ export default class Programs extends Component {
     const { personOption } = this.state;
     const { jobOption } = this.state;
 
+    let isOptionsSelected;
+    let isCredits;
+
+    if (this.state.personOption === null || this.state.jobOption === null) {
+      isOptionsSelected = (
+        <StyledButton disabled>Tilføj kreditering</StyledButton>
+      );
+    } else {
+      isOptionsSelected = (
+        <StyledButton primary onClick={this.onSave}>
+          Tilføj kreditering
+        </StyledButton>
+      );
+    }
+
+    if (this.state.credits.length > 0) {
+      isCredits = this.state.credits.map(this.renderTables.bind(this));
+    } else {
+      isCredits = (
+        <Heading
+          level={2}
+          style={{ gridColumn: "span 3", placeSelf: "center" }}
+        >
+          Ingen krediteringer fundet
+        </Heading>
+      );
+    }
+
     return (
       <Layout>
         <Heading style={{ alignSelf: "end" }} level={1}>
@@ -283,13 +324,11 @@ export default class Programs extends Component {
           </Heading>
           <div>
             <StyledStatus>
-              <b>Status:</b> Godkendt
+              <b>Status:</b> {this.state.credits.length} krediteringer
             </StyledStatus>
           </div>
         </TitleGrid>
-        <BodyGrid>
-          {this.state.credits.map(this.renderTables.bind(this))}
-        </BodyGrid>
+        <BodyGrid>{isCredits}</BodyGrid>
         <RightGrid>
           <FormGrid>
             <StyledLabel htmlFor="job">Krediteringskategori</StyledLabel>
@@ -320,11 +359,7 @@ export default class Programs extends Component {
               }))}
             ></Select>
           </FormGrid>
-          <FormGrid>
-            <StyledButton primary onClick={this.onSave}>
-              Tilføj kreditering
-            </StyledButton>
-          </FormGrid>
+          <FormGrid>{isOptionsSelected}</FormGrid>
         </RightGrid>
       </Layout>
     );

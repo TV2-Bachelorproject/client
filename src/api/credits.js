@@ -1,3 +1,5 @@
+import request from "./request";
+
 const options = {
   mode: "cors",
   cache: "no-cache",
@@ -45,6 +47,11 @@ export default {
 
     return (await res.json()) || [];
   },
+  /**
+   * Create credit
+   * @param {Mixed} body
+   * @return {Promise}
+   */
   async createCredit(body) {
     let res = await fetch(`http://localhost:3000/credits`, {
       method: "POST",
@@ -52,6 +59,15 @@ export default {
       ...options,
     });
 
-    return res.json() || [];
+    return res.ok || [];
+  },
+  /**
+   * Delete exisintg credit through body
+   * @param {Mixed} body
+   * @return {Promise}
+   */
+  async deleteCredit(body) {
+    let res = request.delete("/credits", body);
+    return res.ok;
   },
 };

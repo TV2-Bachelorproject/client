@@ -7,7 +7,7 @@ import TextInput from "../../components/textInput/TextInput";
 import program from "../../api/program";
 import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const Grid = styled.div`
   grid-row: 2/4;
@@ -39,9 +39,9 @@ export default class Programs extends Component {
     }
   };
 
-  search = e => {
-    this.setState({ search: e.target.value })
-  }
+  search = (e) => {
+    this.setState({ search: e.target.value });
+  };
 
   renderPrograms(program) {
     if (!program.title) {
@@ -62,7 +62,7 @@ export default class Programs extends Component {
         <td>
           <a href={"/program/" + program.id}>
             <FontAwesomeIcon
-              icon={faPlus}
+              icon={faPen}
               style={{
                 fontSize: "15px",
                 marginRight: "5px",
@@ -97,7 +97,15 @@ export default class Programs extends Component {
         <Heading style={{ alignSelf: "end" }} level={1}>
           Programmer
         </Heading>
-        <TextInput style={{maxHeight: '30px', border: 'solid 1px #000', alignSelf: "end" }} text="Søg" onChange={this.search} />
+        <TextInput
+          style={{
+            maxHeight: "30px",
+            border: "solid 1px #000",
+            alignSelf: "end",
+          }}
+          text="Søg"
+          onChange={this.search}
+        />
         <Grid>
           <Datatable>
             <table>
@@ -111,7 +119,13 @@ export default class Programs extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.programs.filter(p => p.title.toLowerCase().includes(this.state.search.toLowerCase())).map(this.renderPrograms.bind(this))}
+                {this.state.programs
+                  .filter((p) =>
+                    p.title
+                      .toLowerCase()
+                      .includes(this.state.search.toLowerCase())
+                  )
+                  .map(this.renderPrograms.bind(this))}
               </tbody>
               <tfoot>
                 <tr></tr>
