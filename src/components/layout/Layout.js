@@ -28,11 +28,6 @@ const StyledAnchor = styled(Anchor)`
     background-color: #f6f5fa;
     border-left: solid 3px #5c69e0;
   }
-  &.active {
-    padding: 15px 10px 15px 37px;
-    background-color: #f6f5fa;
-    border-left: solid 3px #5c69e0;
-  }
 `;
 
 const BottomMenu = styled.div`
@@ -48,14 +43,11 @@ const StyledHeading = styled(Heading)`
 
 const StyledLayout = styled.div`
   display: grid;
-  grid-template-rows: 1fr 0.5fr 2fr 2fr;
+  grid-template-rows: 1fr 2fr 2fr;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
-  grid-auto-rows: minmax(0, auto);
+  grid-auto-rows: minmax(100px, auto);
   padding-left: 4em;
-  padding-right: 4em;
-  overflow: auto;
-  padding-bottom: 4em;
 `;
 
 export default class Layout extends Component {
@@ -74,17 +66,9 @@ export default class Layout extends Component {
    * @type {Array}
    */
   userDetails = [
-    ["Bruger", "/user", faUser, "20px"],
-    ["Indstillinger", "/indstillinger", faTools, "20px"],
+    ["Bruger", "/", faUser, "20px"],
+    ["Indstillinger", "/Indstillinger", faTools, "20px"],
   ];
-
-  isActive(path) {
-    if (window.location.pathname !== path) {
-      return "";
-    }
-
-    return "active";
-  }
 
   render() {
     if (!localStorage.getItem('token')) {
@@ -112,10 +96,7 @@ export default class Layout extends Component {
                   cursor: "pointer",
                 }}
               >
-                <StyledAnchor
-                  href={path}
-                  className={["menuItem", this.isActive(path)].join(" ")}
-                >
+                <StyledAnchor href={path}>
                   <FontAwesomeIcon
                     icon={icon}
                     style={{ fontSize: "19px", marginRight: "15px" }}
@@ -130,10 +111,7 @@ export default class Layout extends Component {
             <StyledList>
               {this.userDetails.map(([title, path, icon], index) => (
                 <li key={index} style={{ cursor: "pointer" }}>
-                  <StyledAnchor
-                    href={path}
-                    className={["menuItem", this.isActive(path)].join(" ")}
-                  >
+                  <StyledAnchor href={path}>
                     <FontAwesomeIcon
                       icon={icon}
                       style={{ fontSize: "19px", marginRight: "15px" }}
@@ -146,10 +124,7 @@ export default class Layout extends Component {
             </StyledList>
           </BottomMenu>
         </PageSidebar>
-        <StyledLayout
-          className={this.props.className + " " + "view"}
-          style={{ background: "#f6f5fa" }}
-        >
+        <StyledLayout className="view" style={{ background: "#f6f5fa" }}>
           {this.props.children}
         </StyledLayout>
       </Grid>

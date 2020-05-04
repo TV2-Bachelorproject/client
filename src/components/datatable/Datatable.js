@@ -48,7 +48,7 @@ const StyledTable = styled.div`
   }
   tr:hover{
     background:#0000000a;
-    
+    cursor: pointer;
   }
 }
 
