@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import { Grid } from "../grid/Grid";
 import styled from "styled-components";
 import { PageSidebar } from "../Structure/pageSidebar/pageSidebar";
@@ -10,8 +10,8 @@ import {
   faBars,
   faBuilding,
   faFileVideo,
-  faUser,
   faTools,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 const StyledList = styled.ul`
@@ -74,8 +74,8 @@ export default class Layout extends Component {
    * @type {Array}
    */
   userDetails = [
-    ["Bruger", "/user", faUser, "20px"],
     ["Indstillinger", "/indstillinger", faTools, "20px"],
+    ["Log ud", "/logout", faSignOutAlt, "20px"],
   ];
 
   isActive(path) {
@@ -87,10 +87,9 @@ export default class Layout extends Component {
   }
 
   render() {
-    if (!localStorage.getItem('token')) {
-      return <Redirect to='/login' />
+    if (!localStorage.getItem("token")) {
+      return <Redirect to="/login" />;
     }
-
 
     return (
       <Grid tag="div">
