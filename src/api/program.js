@@ -1,7 +1,11 @@
+import request from "./request";
+
 export default {
+  /**
+   * Get all programs
+   * @return {Promise}
+   */
   getPrograms: async () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     let getProgramsQuery = `{
           programs{
             id
@@ -12,16 +16,27 @@ export default {
           }
         }
           `;
-    let requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({ query: getProgramsQuery }),
-      redirect: "follow",
-    };
 
-    let res = await fetch("http://localhost:3000/graphql", requestOptions);
-
-    const data = await res.json();
-    return data || [];
+    let res = await request.post("/graphql", { query: getProgramsQuery });
+    return (await res.json()) || [];
+  },
+  /**
+   * Get program
+   * @param {int} id
+   * @return {Promise}
+   */
+  getProgram: async (id) => {
+    let query = `{
+          program(id:${id}){
+            id
+            programId
+            title
+            teaser
+            description
+          }
+        }
+          `;
+    let res = await request.post("/graphql", { query: query });
+    return (await res.json()) || [];
   },
 };

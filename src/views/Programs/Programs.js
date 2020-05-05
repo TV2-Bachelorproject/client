@@ -5,7 +5,9 @@ import Heading from "../../components/heading/Heading";
 import Datatable from "../../components/datatable/Datatable";
 import TextInput from "../../components/textInput/TextInput";
 import program from "../../api/program";
-import moment from "moment";
+import Moment from "react-moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 
 const Grid = styled.div`
   grid-row: 2/4;
@@ -37,27 +39,53 @@ export default class Programs extends Component {
     }
   };
 
-  search = e => {
-    this.setState({ search: e.target.value })
-  }
+  search = (e) => {
+    this.setState({ search: e.target.value });
+  };
 
-  renderPrograms(program) {
+  renderPrograms(program, index) {
     if (!program.title) {
       return;
     }
 
     return (
-      <tr>
+      <tr key={index}>
         <td>{program.id}</td>
         <td>{program.title}</td>
         <td>
-          {program.airTimeFrom}
-          {moment
-            .unix(program.airTimeFrom)
-            .format("dddd, MMMM Do, YYYY h:mm A")}{" "}
-          til{" "}
-          {moment.unix(program.airTimeTo).format("dddd, MMMM Do, YYYY h:mm A")}}{" "}
-          {program.airTimeTo}
+          {" "}
+          <Moment local unix>
+            {program.airTimeFrom}
+          </Moment>
+        </td>
+        <td>Accepteret</td>
+        <td>
+          <a href={"/program/" + program.id}>
+            <FontAwesomeIcon
+              icon={faPen}
+              style={{
+                fontSize: "15px",
+                marginRight: "5px",
+                background: "rgb(246, 245, 250)",
+                borderRadius: "5px",
+                padding: "8px",
+                lineHeight: "15px",
+              }}
+              color="#75808e"
+            />
+          </a>{" "}
+          <FontAwesomeIcon
+            icon={faCheck}
+            style={{
+              fontSize: "15px",
+              marginRight: "5px",
+              background: "rgb(246, 245, 250)",
+              borderRadius: "5px",
+              padding: "8px",
+              lineHeight: "15px",
+            }}
+            color="#75808e"
+          />
         </td>
       </tr>
     );
@@ -67,9 +95,17 @@ export default class Programs extends Component {
     return (
       <Layout>
         <Heading style={{ alignSelf: "end" }} level={1}>
-          Programs
+          Programmer
         </Heading>
-        <TextInput style={{maxHeight: '30px', border: 'solid 1px #000', alignSelf: "end" }} text="Søg" onChange={this.search} />
+        <TextInput
+          style={{
+            maxHeight: "30px",
+            border: "solid 1px #000",
+            alignSelf: "end",
+          }}
+          text="Søg"
+          onChange={this.search}
+        />
         <Grid>
           <Datatable>
             <table>
@@ -77,16 +113,22 @@ export default class Programs extends Component {
                 <tr>
                   <th>ID</th>
                   <th>Titel</th>
-                  <th>Afspillet d.</th>
+                  <th>Dato</th>
+                  <th>Status</th>
+                  <th>Handling</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.programs.filter(p => p.title.toLowerCase().includes(this.state.search.toLowerCase())).map(this.renderPrograms.bind(this))}
+                {this.state.programs
+                  .filter((p) =>
+                    p.title
+                      .toLowerCase()
+                      .includes(this.state.search.toLowerCase())
+                  )
+                  .map(this.renderPrograms.bind(this))}
               </tbody>
               <tfoot>
-                <tr>
-                  <td colSpan="3">Footer</td>
-                </tr>
+                <tr></tr>
               </tfoot>
             </table>
           </Datatable>
