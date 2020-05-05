@@ -1,29 +1,21 @@
-const options = {
-  mode: "cors",
-  cache: "no-cache",
-  credentials: "same-origin",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  redirect: "follow",
-  referrer: "no-referrer",
-};
+import request from "./request";
 
 export default {
+  /**
+   * Get all people
+   * @return {Promise}
+   */
   async getPeople() {
-    let res = await fetch("http://localhost:3000/people", {
-      method: "GET",
-      ...options,
-    });
-
+    let res = await request.get("/people");
     return await res.json();
   },
+  /**
+   * Create new person
+   * @param {Mixed} body
+   * @return {Promise}
+   */
   async createPerson(body) {
-    let res = await fetch(`http://localhost:3000/people`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      ...options,
-    });
+    let res = await request.post("/people", body);
 
     return (await res.json()) || [];
   },

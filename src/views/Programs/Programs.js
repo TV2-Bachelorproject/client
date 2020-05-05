@@ -43,13 +43,13 @@ export default class Programs extends Component {
     this.setState({ search: e.target.value });
   };
 
-  renderPrograms(program) {
+  renderPrograms(program, index) {
     if (!program.title) {
       return;
     }
 
     return (
-      <tr>
+      <tr key={index}>
         <td>{program.id}</td>
         <td>{program.title}</td>
         <td>

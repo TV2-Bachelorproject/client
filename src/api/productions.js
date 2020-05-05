@@ -1,8 +1,12 @@
+import request from "./request";
+
 export default {
+  /**
+   * Get all productions
+   * @return {Promise}
+   */
   getProductions: async () => {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    let getProductionsQuery = `{
+    let query = `{
         productions{
           id
           producedBy
@@ -11,16 +15,9 @@ export default {
         }
       }
         `;
-    let requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({ query: getProductionsQuery }),
-      redirect: "follow",
-    };
 
-    let res = await fetch("http://localhost:3000/graphql", requestOptions);
+    let res = await request.post("/graphql", { query: query });
 
-    const data = await res.json();
-    return data || [];
+    return (await res.json()) || [];
   },
 };

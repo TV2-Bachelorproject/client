@@ -1,25 +1,20 @@
 import request from "./request";
 
-const options = {
-  mode: "cors",
-  cache: "no-cache",
-  credentials: "same-origin",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  redirect: "follow",
-  referrer: "no-referrer",
-};
-
 export default {
+  /**
+   * Get credit groups
+   * @return {Promise}
+   */
   async getCreditGroups() {
-    let res = await fetch("http://localhost:3000/credits/groups", {
-      method: "GET",
-      ...options,
-    });
+    let res = await request.get("/credits/groups");
 
     return await res.json();
   },
+  /**
+   * Get program credits
+   * @param {int} id
+   * @return {Promise}
+   */
   getProgramCredits: async (id) => {
     let query = `
     {
@@ -38,12 +33,7 @@ export default {
       }
     }
     `;
-
-    let res = await fetch("http://localhost:3000/graphql", {
-      method: "POST",
-      body: JSON.stringify({ query: query }),
-      ...options,
-    });
+    let res = await request.post("/graphql", { query: query });
 
     return (await res.json()) || [];
   },
@@ -53,12 +43,7 @@ export default {
    * @return {Promise}
    */
   async createCredit(body) {
-    let res = await fetch(`http://localhost:3000/credits`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      ...options,
-    });
-
+    let res = await request.post("/credits", body);
     return res.ok || [];
   },
   /**
