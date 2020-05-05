@@ -27,11 +27,15 @@ const StyledAnchor = styled(Anchor)`
     padding: 15px 10px 15px 37px;
     background-color: #f6f5fa;
     border-left: solid 3px #5c69e0;
+    font-weight: 600;
+    color: #181d69;
   }
   &.active {
     padding: 15px 10px 15px 37px;
     background-color: #f6f5fa;
     border-left: solid 3px #5c69e0;
+    font-weight: 600;
+    color: #181d69;
   }
 `;
 
