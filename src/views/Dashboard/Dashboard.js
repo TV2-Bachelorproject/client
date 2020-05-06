@@ -93,12 +93,13 @@ export default class Dashboard extends Component {
         <td>{program.title}</td>
         <td>
           {" "}
-          <Moment local unix>
-            {program.airTimeFrom}
+          <Moment unix local format="HH:mm ">
+            {program.airTimeFrom / 1000}
+          </Moment>{" "}
+          -{" "}
+          <Moment unix local format="HH:mm">
+            {program.airTimeTo / 1000}
           </Moment>
-        </td>
-        <td>
-          <a href={"/program/" + program.id}>T</a>
         </td>
       </tr>
     );
