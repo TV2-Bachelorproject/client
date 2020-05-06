@@ -46,7 +46,11 @@ export default {
     localStorage.removeItem("token");
   },
 
-  check() {
-    return !!localStorage.getItem("token");
+  isAdmin () {
+    return JSON.parse(atob(localStorage.token.split('.')[1])).Admin
   },
+
+  check () {
+    return !!localStorage.getItem('token')
+  }
 };

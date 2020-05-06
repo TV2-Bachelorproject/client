@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import program from "../../api/program";
+import auth from "../../api/auth";
 import Layout from "../../components/Layout/Layout";
 import Heading from "../../components/heading/Heading";
 import Button from "../../components/button/Button";
 import Select from "../../components/select/Select";
 import Datatable from "../../components/datatable/Datatable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons";
 import credits from "../../api/credits";
 import persons from "../../api/persons";
 
@@ -134,6 +135,15 @@ export default class Programs extends Component {
     this.setState({ personOption });
   };
 
+  accept = async () => {
+    try {
+      await program.acceptCredits(Number(this.props.match.params.id));
+      this.loadCredits();
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   init = () => {
     this.loadProgram(this.props.match.params.id);
     this.loadGroups();
@@ -243,7 +253,12 @@ export default class Programs extends Component {
 
     return (
       <StyledDatatable key={index}>
-        <Heading level={2}>{credit.creditGroup.name}</Heading>
+        <Heading level={2}>
+          {credit.creditGroup.name}
+          {credit.accepted && (
+            <span style={{paddingLeft: '15px', color: 'green'}}><FontAwesomeIcon icon={faCheck} /></span>
+          )}
+        </Heading>
         <table>
           <thead>
             <tr>
@@ -326,6 +341,11 @@ export default class Programs extends Component {
             <StyledStatus>
               <b>Status:</b> {this.state.credits.length} krediteringer
             </StyledStatus>
+          </div>
+          <div>
+            {auth.isAdmin() && (
+              <Button onClick={this.accept} primary>Accepter</Button>
+            )}
           </div>
         </TitleGrid>
         <BodyGrid>{isCredits}</BodyGrid>
