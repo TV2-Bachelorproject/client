@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 
 const StyledHeading = styled.h1`
-  font-family: montserrat;
+  font-family: "Jost", sans-serif;
   color: #343350;
 `;
 
@@ -11,7 +11,7 @@ const Heading = ({ level, ...rest }) => {
 };
 
 Heading.defaultProps = {
-  level: 1
+  level: 1,
 };
 
 export default Heading;

@@ -66,11 +66,6 @@ export default class Productions extends Component {
               <tbody>
                 {this.state.productions.map(this.renderProductions.bind(this))}
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan="3">Footer</td>
-                </tr>
-              </tfoot>
             </table>
           </Datatable>
         </Grid>
