@@ -48,6 +48,10 @@ export default {
     localStorage.removeItem('token')
   },
 
+  isAdmin () {
+    return JSON.parse(atob(localStorage.token.split('.')[1])).Admin
+  },
+
   check () {
     return !!localStorage.getItem('token')
   }

@@ -39,4 +39,15 @@ export default {
     let res = await request.post("/graphql", { query: query });
     return (await res.json()) || [];
   },
+
+  /**
+   * Accept credits
+   * @param {int} id
+   * @return {Promise}
+   */
+  acceptCredits: async (id) => {
+    return await request.post("/credits/accept", { ProgramID: id });
+  },
+
+
 };
