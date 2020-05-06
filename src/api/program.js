@@ -13,6 +13,9 @@ export default {
             title
             airTimeTo
             airTimeFrom
+            credits{
+              accepted
+            }
           }
         }
           `;
@@ -48,6 +51,4 @@ export default {
   acceptCredits: async (id) => {
     return await request.post("/credits/accept", { ProgramID: id });
   },
-
-
 };
