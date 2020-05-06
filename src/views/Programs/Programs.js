@@ -7,7 +7,7 @@ import TextInput from "../../components/textInput/TextInput";
 import program from "../../api/program";
 import Moment from "react-moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 const Grid = styled.div`
   grid-row: 2/4;
@@ -50,15 +50,50 @@ export default class Programs extends Component {
 
     return (
       <tr key={index}>
-        <td>{program.id}</td>
         <td>{program.title}</td>
         <td>
           {" "}
-          <Moment local unix>
-            {program.airTimeFrom}
+          <Moment unix local format="DD/MM ">
+            {program.airTimeFrom / 1000}
           </Moment>
         </td>
-        <td>Accepteret</td>
+        <td>
+          <Moment unix local format="HH:mm ">
+            {program.airTimeFrom / 1000}
+          </Moment>{" "}
+          -{" "}
+          <Moment unix local format="HH:mm">
+            {program.airTimeTo / 1000}
+          </Moment>
+        </td>
+        <td>
+          {(program.credits.length > 0 &&
+            program.credits.every((credit) => credit.accepted) && (
+              <span
+                style={{
+                  color: "white",
+                  background: "green",
+                  paddingLeft: "1em",
+                  paddingRight: "1em",
+                  borderRadius: "15px",
+                }}
+              >
+                Accepteret
+              </span>
+            )) || (
+            <span
+              style={{
+                color: "white",
+                background: "grey",
+                paddingLeft: "1em",
+                paddingRight: "1em",
+                borderRadius: "15px",
+              }}
+            >
+              Afventer
+            </span>
+          )}
+        </td>
         <td>
           <a href={"/program/" + program.id}>
             <FontAwesomeIcon
@@ -73,19 +108,7 @@ export default class Programs extends Component {
               }}
               color="#75808e"
             />
-          </a>{" "}
-          <FontAwesomeIcon
-            icon={faCheck}
-            style={{
-              fontSize: "15px",
-              marginRight: "5px",
-              background: "rgb(246, 245, 250)",
-              borderRadius: "5px",
-              padding: "8px",
-              lineHeight: "15px",
-            }}
-            color="#75808e"
-          />
+          </a>
         </td>
       </tr>
     );
@@ -100,7 +123,7 @@ export default class Programs extends Component {
         <TextInput
           style={{
             maxHeight: "30px",
-            border: "solid 1px #000",
+            background: "white",
             alignSelf: "end",
           }}
           text="Søg"
@@ -111,9 +134,9 @@ export default class Programs extends Component {
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Titel</th>
                   <th>Dato</th>
+                  <th>Tidspunkt</th>
                   <th>Status</th>
                   <th>Handling</th>
                 </tr>
