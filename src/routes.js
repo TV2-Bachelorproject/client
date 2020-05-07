@@ -12,6 +12,7 @@ import ProgramCredit from "./views/Programs/ProgramCredit";
 import Dashboard from "./views/Dashboard";
 import NotFound from "./views/NotFound";
 import auth from "./api/auth";
+import Persons from "./views/Persons";
 
 function logout() {
   auth.logout();
@@ -25,6 +26,7 @@ export default () => (
       <Route path="/productions" component={Productions} />
       <Route path="/programs" component={Programs} />
       <Route path="/program/:id" component={ProgramCredit} />
+      <Route path="/persons" component={Persons} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={logout} />
       <Route path="/404" component={NotFound} />

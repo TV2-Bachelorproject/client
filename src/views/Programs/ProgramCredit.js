@@ -139,10 +139,10 @@ export default class Programs extends Component {
     try {
       await program.acceptCredits(Number(this.props.match.params.id));
       this.loadCredits();
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   init = () => {
     this.loadProgram(this.props.match.params.id);
@@ -256,7 +256,9 @@ export default class Programs extends Component {
         <Heading level={2}>
           {credit.creditGroup.name}
           {credit.accepted && (
-            <span style={{paddingLeft: '15px', color: 'green'}}><FontAwesomeIcon icon={faCheck} /></span>
+            <span style={{ paddingLeft: "15px", color: "green" }}>
+              <FontAwesomeIcon icon={faCheck} />
+            </span>
           )}
         </Heading>
         <table>
@@ -344,7 +346,9 @@ export default class Programs extends Component {
           </div>
           <div>
             {auth.isAdmin() && (
-              <Button onClick={this.accept} primary>Accepter</Button>
+              <Button onClick={this.accept} primary>
+                Accepter krediteringer
+              </Button>
             )}
           </div>
         </TitleGrid>

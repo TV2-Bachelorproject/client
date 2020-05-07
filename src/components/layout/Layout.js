@@ -8,10 +8,11 @@ import Anchor from "../anchor/Anchor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faBuilding,
-  faFileVideo,
   faTools,
   faSignOutAlt,
+  faUserFriends,
+  faVideo,
+  faSatelliteDish,
 } from "@fortawesome/free-solid-svg-icons";
 
 const StyledList = styled.ul`
@@ -68,9 +69,10 @@ export default class Layout extends Component {
    * @type {Array}
    */
   producer = [
-    ["Dashboard", "/", faBars, "20px"],
-    ["Produktioner", "/productions", faBuilding, "20px"],
-    ["Programmer", "/programs", faFileVideo, "20px"],
+    ["Dashboard", "/", faBars, "16px"],
+    ["Produktioner", "/productions", faSatelliteDish, "16px"],
+    ["Programmer", "/programs", faVideo, "15px"],
+    ["Personer", "/persons", faUserFriends, "15px"],
   ];
 
   /**
@@ -108,7 +110,7 @@ export default class Layout extends Component {
             Credits
           </StyledHeading>
           <StyledList>
-            {this.producer.map(([title, path, icon], index) => (
+            {this.producer.map(([title, path, icon, size], index) => (
               <li
                 key={index}
                 style={{
@@ -121,7 +123,7 @@ export default class Layout extends Component {
                 >
                   <FontAwesomeIcon
                     icon={icon}
-                    style={{ fontSize: "19px", marginRight: "15px" }}
+                    style={{ fontSize: size, marginRight: "15px" }}
                     color="#75808e"
                   />
                   {title}
@@ -150,7 +152,7 @@ export default class Layout extends Component {
           </BottomMenu>
         </PageSidebar>
         <StyledLayout
-          className={this.props.className + " " + "view"}
+          className={this.props.className + " view"}
           style={{ background: "#f6f5fa" }}
         >
           {this.props.children}
