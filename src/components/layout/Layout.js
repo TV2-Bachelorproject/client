@@ -53,7 +53,7 @@ const StyledHeading = styled(Heading)`
 
 const StyledLayout = styled.div`
   display: grid;
-  grid-template-rows: 1fr 2fr 2fr;
+  grid-template-rows: 1fr 0.5fr 2fr 2fr;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
   grid-auto-rows: minmax(0, auto);
